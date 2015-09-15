@@ -159,7 +159,7 @@ class AndorCamera(QObject):
 
 	def onVerticalSpeedChanged(self, value):
 		result = self.camera.GetVSSpeed(value)
-		self.settingDialog.verticalSpeedLabel.setText('%fMHz' % result['speed'])
+		self.settingDialog.verticalSpeedLabel.setText('%fus' % result['speed'])
 
 	def onHorizontalSpeedChanged(self, value):
 		result = self.camera.GetHSSpeed(0, self.ampl_type, value)
