@@ -35,7 +35,6 @@ def incre_svd():
 		k = npl.norm(j)
 		j /= k
 		
-		print(k)
 		if k < trunc:
 			k = 0
 		

@@ -14,7 +14,6 @@ class FringeRemoveNode(Node):
 		terminals = {
 			'sig':{'io':'in'},
 			'ref':{'io':'in'},
-			'bkg':{'io':'in'},
 			'sigMask': {'io':'in'},
 			'ref1':{'io':'out', 'bypass': 'ref'}
 		}
@@ -42,15 +41,13 @@ class FringeRemoveNode(Node):
 	def ctrlWidget(self):
 		return self.paratree
 
-	def process(self, sig, ref, bkg, sigMask, display=True):
+	def process(self, sig, ref, sigMask, display=True):
 		self.remover.setTrunc(self.paras['trunc'])
-		ref = ref - bkg
 		if self.paras['updateLib'] and self.paras['rank'] <= self.paras['rankLimit']:
 			self.remover.updateLibrary(ref)
 			self.paras['rank'] = self.remover.rank
-		sig = sig - bkg
 		coef, ref = self.remover.reconstruct(np.ma.array(sig, mask=sigMask))
-		ref = ref.reshape(512, 512) + bkg
+		ref = ref.reshape(512, 512)
 		return {'ref1': ref}
 
 	def saveState(self):
