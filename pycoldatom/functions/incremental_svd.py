@@ -18,12 +18,13 @@ def incre_svd():
 	V0 = 1.0
 	Vp = 1.0
 	Vpi = 1.0
+	k0 = 0.0
 
 	while True:
 		r = len(s)
 		U = np.dot(U0, Up)
 		V = np.dot(V0, Vp)
-		c = yield U, s, V
+		c = yield U, s, V, k0
 		if c is None:
 			continue
 
@@ -35,6 +36,7 @@ def incre_svd():
 		k = npl.norm(j)
 		j /= k
 		
+		k0 = k
 		if k < trunc:
 			k = 0
 		

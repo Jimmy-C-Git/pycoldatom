@@ -11,12 +11,13 @@ class FringeRemove:
 		incremental_svd.trunc = trunc
 		self.svd_result = None
 		self.rank = 0
-
+		self.residual = 0
 		self.reset()
 
 	def updateLibrary(self, image):
-		self.svd_result = self.svd.send(image.flatten()[:, np.newaxis])
-		U, s, V = self.svd_result
+		U, s, V, k0 = self.svd.send(image.flatten()[:, np.newaxis])
+		self.svd_result = U, s, V
+		self.residual = k0
 		self.rank = len(s)
 
 	# def reconstruct(self, image):
@@ -45,6 +46,7 @@ class FringeRemove:
 
 	def setTrunc(self, trunc):
 		self.trunc = trunc
+		incremental_svd.trunc = trunc
 
 	def reset(self):
 		self.svd = incre_svd()

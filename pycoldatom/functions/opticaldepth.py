@@ -1,6 +1,9 @@
 import numpy as np
 
-def calculateOD(sig, ref):
+def calculateOD(sig, ref, bkg):
+	if bkg is not None:
+		sig = sig - bkg
+		ref = ref - bkg
 	min_step = 1
 	mask = np.logical_or(sig<=0, ref<=0)
 	sig = np.maximum(sig, min_step)
