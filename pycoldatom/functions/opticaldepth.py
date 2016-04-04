@@ -8,7 +8,7 @@ def calculateOD(sig, ref, bkg):
 	mask = np.logical_or(sig<=0, ref<=0)
 	sig = np.maximum(sig, min_step)
 	ref = np.maximum(ref, min_step)
-	od = -np.log(sig/ref)
+	od = (-np.log(sig/ref)).astype('f4')
 	od_0 = np.copy(od)
 	od_0[mask] = 0
 	return od, od_0
