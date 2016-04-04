@@ -31,6 +31,15 @@ class LoadmatNode(Node):
 		self.matdata = None
 		self.filename = None
 		self.fileBrowser.clicked.connect(self.onFileSelected)
+		self.dir = None
+
+		self.panel = QWidget()
+		self.layout = QGridLayout(self.panel)
+		self.iterateDirButton = QPushButton("Iterate Directory")
+		self.iterateDirButton.clicked.connect(self.onIterateDir)
+		self.layout.addWidget(self.iterateDirButton, 0, 0)
+
+		self.panel.setLayout(self.layout)
 
 	def onFileSelected(self, index):
 		path = self.fileBrowser.filemodel.filePath(index)
@@ -40,6 +49,19 @@ class LoadmatNode(Node):
 			self.matdata = loadmat(path)
 			self.filename = filename
 			self.setOutput(data=self.matdata, title=self.filename)
+
+	def onIterateDir(self):
+		if self.dir is not None:
+			for f in os.listdir(self.dir):
+				filename, fileext = os.path.splitext(f)
+				path = os.path.join(self.dir, f)
+				if fileext.lower() == '.mat':
+					self.matdata = loadmat(path)
+					self.filename = filename
+					self.setOutput(data=self.matdata, title=self.filename)
+
+	def ctrlWidget(self):
+		return self.panel
 
 	def process(self, display=True):
 		return {'data':self.matdata, 'title':self.filename}
@@ -154,4 +176,74 @@ class SavematNode(Node):
 		self.fileInfixEdit.setText(state['fileinfix'])
 		# self.fileSuffixEdit.setText(state['filesuffix'])
 
-nodelist = [LoadmatNode, SavematNode]
+class SavematSimpleNode(Node):
+	"""Node for saving mat file
+
+	Input terminals:
+	- data: data to be saved in mat. Usually a dict
+
+	Output terminals:
+	- title: saved file name
+	"""
+
+	nodeName = 'Save mat simple'
+	nodePaths = [('File',)]
+
+	def __init__(self, name):
+		super().__init__(name, terminals={'data':{'io':'in'}, 'title': {'io': 'in'}}, allowAddInput=True)
+
+		self.title = None
+
+		self.panel = QWidget()
+		self.layout = QGridLayout(self.panel)
+
+		self.pathLabel = QLabel('Path')
+		self.layout.addWidget(self.pathLabel, 0, 0)
+		self.pathEdit = QLineEdit()
+		self.layout.addWidget(self.pathEdit, 0, 1)
+		self.selectFolderButton = QPushButton('...')
+		self.selectFolderButton.setMaximumWidth(30)
+		self.selectFolderButton.clicked.connect(self.onSelectFolder)
+		# self.selectFolderButton.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+		self.layout.addWidget(self.selectFolderButton, 0, 2)
+
+		self.fileSuffixLabel = QLabel('File suffix')
+		self.layout.addWidget(self.fileSuffixLabel, 1, 0)
+		self.fileSuffixEdit = QLineEdit('')
+		self.layout.addWidget(self.fileSuffixEdit, 1, 1, 1, 2)
+
+		self.panel.setLayout(self.layout)
+
+	def onSelectFolder(self):
+		path = QFileDialog.getExistingDirectory(self.panel)
+		self.pathEdit.setText(path)
+
+	def process(self, data, title, display=True):
+		if data is not None and title is not None:
+			filename = title + self.fileSuffixEdit.text()
+			self.title = filename
+			path = os.path.join(self.pathEdit.text(), filename)
+			if os.path.exists(path):
+				return
+
+			dirs = os.path.dirname(path)
+			if not os.path.isdir(dirs):
+				os.makedirs(dirs)
+			savemat(path, data)
+		return
+
+	def ctrlWidget(self):
+		return self.panel
+
+	def saveState(self):
+		state = super().saveState()
+		state['savepath'] = self.pathEdit.text()
+		state['filesuffix'] = self.fileSuffixEdit.text()
+		return state
+
+	def restoreState(self, state):
+		super().restoreState(state)
+		self.pathEdit.setText(state['savepath'])
+		self.fileSuffixEdit.setText(state['filesuffix'])
+
+nodelist = [LoadmatNode, SavematNode, SavematSimpleNode]

@@ -39,7 +39,7 @@ class FringeRemoveNode(Node):
 		self.paratree.setParameters(self.paras, showTop=False)
 		self.remover = FringeRemove()
 
-		self.paras.param('reset').sigActivated.connect(self.remover.reset)
+		self.paras.param('reset').sigActivated.connect(self.onReset)
 		self.paras.param('import').sigActivated.connect(self.onImport)
 	
 	def onImport(self):
@@ -78,7 +78,8 @@ class FringeRemoveNode(Node):
 
 	def onReset(self):
 		self.remover.reset()
-		self.paras['rank'].setValue(0)
+		self.paras['rank'] = 0
+		# self.paratree.update()
 
 	def ctrlWidget(self):
 		return self.paratree
