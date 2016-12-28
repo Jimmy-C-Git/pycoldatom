@@ -85,8 +85,12 @@ class FringeRemoveNode(Node):
 		return self.paratree
 
 	def process(self, sig, ref, sigMask, display=True):
-		self.remover.setTrunc(self.paras['trunc'])
-		if self.paras['updateLib'] and self.paras['rank'] <= self.paras['rankLimit']:
+		if self.paras['rank'] <= self.paras['rankLimit']:
+			self.remover.setTrunc(self.paras['trunc'])
+		else:
+			self.remover.setTrunc(np.inf)
+
+		if self.paras['updateLib']:
 			self.remover.updateLibrary(ref)
 			self.paras['rank'] = self.remover.rank
 			self.paras['residual'] = self.remover.residual
