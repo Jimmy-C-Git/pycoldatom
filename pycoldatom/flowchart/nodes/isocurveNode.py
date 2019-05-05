@@ -1,4 +1,4 @@
-from pyqtgraph.flowchart import Node, eq
+from pyqtgraph.flowchart import Node
 import pyqtgraph as pg
 from PyQt5.QtWidgets import *
 

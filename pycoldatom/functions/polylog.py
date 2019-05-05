@@ -16,7 +16,7 @@ faster however.
 
 
 import numpy as np
-from sympy.mpmath import fp
+from mpmath import fp
 
 def fermi_poly3(x):
 	"""fermi_poly3(x), equal to -Li_3(-e^x)"""

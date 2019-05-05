@@ -1,7 +1,9 @@
 from pyqtgraph.flowchart import Node
 from pyqtgraph.console import ConsoleWidget
 
-from scipy.misc import lena
+
+# lena was removed from scipy, use ascent to replace lena, but also use name lena 
+from scipy.misc import ascent as lena
 
 from PyQt5.QtWidgets import *
 
