@@ -81,7 +81,7 @@ class AndorCamera(QObject):
 			drv_path = os.environ['ANDORSDK']
 		except KeyError:
 			raise Exception('Camera driver not found. Check if envionment variable ANDORSDK exist')
-
+		
 		ANDOR_HEADER = os.path.join(drv_path, 'ATMCD32D.H')
 		ANDOR_LIB = os.path.join(drv_path, 'atmcd32d.dll')
 		ANDOR_CACHE = os.path.join(drv_path, 'ATMCD32D.cache')
@@ -103,7 +103,7 @@ class AndorCamera(QObject):
 
 			QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
 			self.sigStatusMessage.emit('Connecting camera...')
-			result = self.camera.Initialize('.').rval
+			result = self.camera.Initialize(b'.').rval
 			QApplication.restoreOverrideCursor()
 
 			if result == self.DRV_SUCCESS:
