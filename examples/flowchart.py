@@ -1,7 +1,7 @@
 import sys
 from init_flowchart import *
 import logging
-logging.basicConfig(level=logging.NOTSET)
+logging.basicConfig(level=logging.ERROR)
 def main():
 	app = QApplication([])
 	fc = Flowchart()

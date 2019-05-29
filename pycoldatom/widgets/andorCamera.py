@@ -9,6 +9,9 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
+import logging
+logger = logging.getLogger('flowchart.camera')
+
 from ctypes import POINTER, c_long
 
 from .cameraSetting_ui import Ui_cameraSettingDialog
@@ -103,7 +106,7 @@ class AndorCamera(QObject):
 
 			QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
 			self.sigStatusMessage.emit('Connecting camera...')
-			result = self.camera.Initialize('.').rval
+			result = self.camera.Initialize(b'.').rval
 			QApplication.restoreOverrideCursor()
 
 			if result == self.DRV_SUCCESS:
@@ -135,7 +138,7 @@ class AndorCamera(QObject):
 				self.setCamera()
 			else:
 				self.sigStatusMessage.emit('Connection Error: %s(%d)' % (self.values[result], result))
-
+				logger.error('Connection Error: %s(%d)' % (self.values[result], result))
 		
 		elif self.connectAction.text() == 'Disconnect':
 			self.tempTimer.stop()
