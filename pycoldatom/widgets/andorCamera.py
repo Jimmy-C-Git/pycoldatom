@@ -84,7 +84,7 @@ class AndorCamera(QObject):
 			drv_path = os.environ['ANDORSDK']
 		except KeyError:
 			raise Exception('Camera driver not found. Check if envionment variable ANDORSDK exist')
-
+		
 		ANDOR_HEADER = os.path.join(drv_path, 'ATMCD32D.H')
 		ANDOR_LIB = os.path.join(drv_path, 'atmcd32d.dll')
 		ANDOR_CACHE = os.path.join(drv_path, 'ATMCD32D.cache')

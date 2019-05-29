@@ -2,6 +2,9 @@ from ...functions.fitclassical import fit_gaussian_result
 from ...functions.fitbosons import fit_bose_bimodal_result
 from .funcNode import nodeFuncWrapper
 
+
+from ...functions import fitGassiuanJimmy as fitJimmy
+
 FitGaussianNode = nodeFuncWrapper(fit_gaussian_result, 
 	nodename='FitGaussian', paths=[('Analysis',)],
 	outterm=['result', 'err'], cpuheavy=True)
@@ -58,4 +61,8 @@ FitBoseBimodalExNode = nodeFuncWrapper(fit_bose_bimodal_result_extended,
 	outterm=['result', 'err', 'data_x0', 'fit_x0', 'data_y0', 'fit_y0'],
 	cpuheavy=True)
 
-nodelist = [FitGaussianNode, FitBoseBimodalNode, FitGaussianExNode, FitBoseBimodalExNode]
+FitGaussianJimmyNode = nodeFuncWrapper(fitJimmy.fit_gaussian_result, 
+	nodename='FitGaussianJimmy', paths=[('Analysis',)],
+	outterm=['result', 'err'], cpuheavy=True)
+
+nodelist = [FitGaussianNode, FitBoseBimodalNode, FitGaussianExNode, FitBoseBimodalExNode,FitGaussianJimmyNode]
