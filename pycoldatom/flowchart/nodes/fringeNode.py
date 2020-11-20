@@ -50,7 +50,7 @@ class FringeRemoveNode(Node):
 		reflabel = self.paras['ref label']
 		bkglabel = self.paras['bkg label']
 		self.remover.setTrunc(self.paras['trunc'])
-		print('trunc', self.paras['trunc'])
+		
 		n_imported = 0
 		try:
 			progress = QProgressDialog("Importing...", "Abort", 0, len(filenames)-1, self.flowchart.win)
@@ -100,11 +100,13 @@ class FringeRemoveNode(Node):
 
 	def saveState(self):
 		state = super().saveState()
-		state['paras'] = self.paras.saveState()
+		#state['paras'] = self.paras.saveState()
+
 		return state
 
 	def restoreState(self, state):
 		super().restoreState(state)
-		self.paras.restoreState(state['paras'])
+		#self.paras.restoreState(state['paras'])
+
 
 nodelist = [FringeRemoveNode]
