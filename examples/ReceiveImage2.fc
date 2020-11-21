@@ -1,0 +1,14 @@
+pos: (0.0, 0.0)
+bypass: False
+terminals:
+nodes: [{'class': 'Dict Select', 'name': 'Dict Select.0', 'pos': (86.36092664583009, 23.81846281164937), 'state': {'pos': (86.36092664583009, 23.81846281164937), 'bypass': False, 'terminals': OrderedDict([('data', {'io': 'in', 'multi': False, 'optional': False, 'renamable': False, 'removable': False, 'multiable': False}), ('selected', {'io': 'out', 'multi': False, 'optional': False, 'renamable': False, 'removable': False, 'multiable': False})]), 'selected': None}}, {'class': 'ImageView', 'name': 'ImageView.0', 'pos': (205.8241165695546, 25.551617011137182), 'state': {'pos': (205.8241165695546, 25.551617011137182), 'bypass': False, 'imageview': {'autoLevel': True, 'gradient': {'mode': 'rgb', 'ticks': [(1.0, (255, 255, 255, 255)), (0.0, (0, 0, 0, 255))]}}, 'geometry': PyQt5.QtCore.QRect(482, 4, 645, 571)}}, {'class': 'RectRoi', 'name': 'RectRoi.0', 'pos': (330.42237755024723, 20.98278755517265), 'state': {'pos': (330.42237755024723, 20.98278755517265), 'bypass': False, 'roi': {'pos': (20.0, 20.0), 'size': (100.0, 100.0), 'angle': 0.0}, 'color': (128, 128, 128, 255), 'path': ''}}, {'class': 'FitGaussian', 'name': 'FitGaussian.0', 'pos': (457.47649790961486, 15.742030794760211), 'state': {'pos': (457.47649790961486, 15.742030794760211), 'bypass': False}}, {'class': 'Console', 'name': 'Console.0', 'pos': (633.5070870378767, -60.09640912298008), 'state': {'pos': (633.5070870378767, -60.09640912298008), 'bypass': False, 'terminals': OrderedDict([('title', {'io': 'in', 'multi': False, 'optional': False, 'renamable': False, 'removable': False, 'multiable': False}), ('gaussian', {'io': 'in', 'multi': False, 'optional': False, 'renamable': True, 'removable': True, 'multiable': True})]), 'geometry': PyQt5.QtCore.QRect(1143, 9, 419, 922)}}, {'class': 'ImageView', 'name': 'ImageView.FitError', 'pos': (635.6961968036834, 72.34473170845678), 'state': {'pos': (635.6961968036834, 72.34473170845678), 'bypass': False, 'imageview': {'autoLevel': True, 'gradient': {'mode': 'rgb', 'ticks': [(1.0, (255, 255, 255, 255)), (0.0, (0, 0, 0, 255))]}}, 'geometry': PyQt5.QtCore.QRect(482, 575, 405, 386)}}, {'class': 'ZeroMQNode', 'name': 'ZeroMQNode.0', 'pos': (-49.295449916695304, -104.63679352944156), 'state': {'pos': (-49.295449916695304, -104.63679352944156), 'bypass': False}}]
+connects: [('FitGaussian.0', 'result', 'Console.0', 'gaussian'), ('RectRoi.0', 'maskedImage', 'FitGaussian.0', 'data'), ('Dict Select.0', 'selected', 'ImageView.0', 'image'), ('FitGaussian.0', 'err', 'ImageView.FitError', 'image'), ('ImageView.0', 'view', 'RectRoi.0', 'view'), ('ZeroMQNode.0', 'received', 'Dict Select.0', 'data')]
+inputNode:
+    pos: (-174.16267996599834, -12.564593582319162)
+    bypass: False
+    terminals:
+outputNode:
+    pos: (223.437498833145, -232.77621017678996)
+    bypass: False
+    terminals:
+geometry: PyQt5.QtCore.QRect(0, 19, 1276, 774)

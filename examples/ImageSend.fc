@@ -1,0 +1,14 @@
+pos: (0.0, 0.0)
+bypass: False
+terminals:
+nodes: [{'class': 'Load mat', 'name': 'Load mat.0', 'pos': (-20.504692181675836, -1.1069183711780681), 'state': {'pos': (-20.504692181675836, -1.1069183711780681), 'bypass': False, 'geometry': PyQt5.QtCore.QRect(0, 0, 640, 480)}}, {'class': 'ZeroMQNode', 'name': 'ZeroMQNode.0', 'pos': (149.6275432354489, -28.202260016864827), 'state': {'pos': (149.6275432354489, -28.202260016864827), 'bypass': False}}]
+connects: [('Load mat.0', 'data', 'ZeroMQNode.0', 'tosend')]
+inputNode:
+    pos: (-150.0, 0.0)
+    bypass: False
+    terminals:
+outputNode:
+    pos: (300.0, 0.0)
+    bypass: False
+    terminals:
+geometry: PyQt5.QtCore.QRect(0, 22, 1920, 1018)
